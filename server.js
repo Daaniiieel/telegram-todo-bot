@@ -2,6 +2,7 @@ const Botgram = require("botgram");
 const figlet = require("figlet");
 
 const { TELEGRAM_BOT_TOKEN } = process.env;
+const { TELEGRAM_ID } = process.env;
 
 if (!TELEGRAM_BOT_TOKEN) {
   console.error(
@@ -9,37 +10,44 @@ if (!TELEGRAM_BOT_TOKEN) {
   );
   process.exit(1);
 }
-        
+
 var todos = [];
 const bot = new Botgram(TELEGRAM_BOT_TOKEN);
 bot.command("list", function(msg, reply, next) {
-  console.log(todos.join("\n"));
-  //reply.text("🚀 Your to-do list:" + "\n");
-  var fancyText="🚀 Your to-do list:" + "\n"+ "\n";
-  var x;
-  var list = "";
-  for (x of todos) {
-  list=list+todos.indexOf(x) + ": " + x + "\n" ;
-  // reply.text(todos.indexOf(x) + ": " + x)
-  } 
-  reply.text(fancyText + list);
-  });
-
-bot.command("add", function(msg, reply, next) {
-  console.log(todos.length + ": " + msg.args(1).toString());
-  // todos.push(todos.length + ": " + msg.args(1).toString());
-  todos.push(msg.args(1).toString());
-
-  reply.text("Updated");
+  if ((msg.from.id == TELEGRAM_ID)) {
+    console.log(todos.join("\n"));
+    var fancyText = "🚀 Your to-do list:" + "\n" + "\n";
+    var x;
+    var list = "";
+    for (x of todos) {
+      list = list + todos.indexOf(x) + ": " + x + "\n";
+    }
+    reply.text(fancyText + list);
+  } else {
+    reply.text("you don't have privileges to use this command.");
+  }
 });
 
-bot.command("del", function (msg, reply, next) {
-  todos.splice (msg.args(1), 1);
-  console.log(todos.toString());
-  reply.text("Updated");
+bot.command("add", function(msg, reply, next) {
+  if (msg.from.id == TELEGRAM_ID) {
+    todos.push(msg.args(1).toString());
+    reply.text("Updated list");
+  } else {
+    reply.text("you don't have privileges to use this command.");
+  }
+});
+
+bot.command("del", function(msg, reply, next) {
+  if (msg.from.id == TELEGRAM_ID) {
+    todos.splice(msg.args(1), 1);
+    console.log(todos.toString());
+    reply.text("Updated");
+  } else {
+    reply.text("you don't have privileges to use this command.");
+  }
 });
 
 bot.text(function(msg, reply, next) {
   reply.text("I do not understand that.");
-  console.log("Received a text message:", msg.text);
+  console.log(msg.from.id);
 });
