@@ -1,30 +1,22 @@
-# hello-express
+# telegram-todo-bot
+The most advanced bot you have ever seen with 280+ commands. Has a huge codebase with more than 2000+ lines of code. Has over 40000 event listeners, the server.js file (main entry) uses ~2.4 GB of memory.
 
-A server that serves a webpage, its resources, and some data
-
-
-## Your Project
-
-On the front-end,
-
-- Edit `views/index.html` to change the content of the webpage
-- `public/client.js` is the javacript that runs when you load the webpage
-- `public/style.css` is the styles for `views/index.html`
-- Drag in `assets`, like images or music, to add them to your project
-
-On the back-end,
-
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
-
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy.
+Actually, it's just a simple telegram bot that can manage a to-do list. 16 MBs of memory. Host anywhere that can run node.
 
 
-## Made by [Glitch](https://glitch.com/)
+### Hosting & setup:
+Host it on glitch.com, it's super easy and fast! Then you can use uptimerobot.com/ to ping it every 5 minutes, so it does not go to sleep.
+To config, edit the .env file and add the following line:
+TELEGRAM_BOT_TOKEN=''
+Inside the quotes, input the Bot Token you got from BotFather.
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+### Commands
+```
 
-Find out more [about Glitch](https://glitch.com/about).
+/list -- list all notes
 
-( ᵔ ᴥ ᵔ )
+/add note_text -- add a note with the contents note_text
+
+/del <id> -- deletes the item with the id <id>. The id is displayed before the note contents in the output of the /list command
+
+```
